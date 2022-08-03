@@ -6,6 +6,7 @@ import HistoryScreen from '../screens/HistoryScreen';
 import AddDataScreen from '../screens/AddDataScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Icon} from '@rneui/base';
+import {Color} from '../Theme/Color';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,9 +22,9 @@ const Tabs = () => {
           borderRadius: 20,
           height: 60,
           position: 'absolute',
-          bottom: 10,
-          left: 10,
-          right: 10,
+          bottom: 20,
+          left: 25,
+          right: 25,
           ...styles.shadow,
         },
 
@@ -32,7 +33,7 @@ const Tabs = () => {
           if (route.name === 'Home') {
             iconName = focused ? 'home-outline' : 'home-outline';
           } else if (route.name === 'History') {
-            iconName = focused ? 'history' : 'history';
+            iconName = focused ? 'chart-arc' : 'chart-arc';
           } else if (route.name === 'AddData') {
             iconName = focused ? 'plus' : 'plus';
           }
@@ -47,13 +48,15 @@ const Tabs = () => {
             );
           } else {
             return (
-              <View style={styles.modalView}>
-                <Icon
-                  name={iconName}
-                  size={size}
-                  color={color}
-                  type="material-community"
-                />
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Icon
+                    name={iconName}
+                    size={size}
+                    color={color}
+                    type="material-community"
+                  />
+                </View>
               </View>
             );
           }
@@ -69,18 +72,27 @@ const Tabs = () => {
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
     shadowOpacity: 0.53,
     shadowRadius: 13.97,
-    elevation: 5,
+    elevation: 15,
+  },
+  centeredView: {
+    top: -10,
+    height: 40,
+    width: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Color.background,
+    // backgroundColor: 'gold',
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
   },
   modalView: {
     position: 'absolute',
     top: -20,
-    padding: 20,
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 200,
     alignItems: 'center',
