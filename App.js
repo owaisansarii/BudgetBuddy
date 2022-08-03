@@ -8,24 +8,20 @@
 
 import React from 'react';
 
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import Tabs from './src/navigation/tabs';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
-    <SafeAreaView>
+    <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <NavigationContainer>
         <Tabs />
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
