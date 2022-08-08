@@ -21,17 +21,16 @@ const Transaction = () => {
       }}>
       <Avatar
         source={{uri: 'https://picsum.photos/200/300'}}
-        size={65}
-        containerStyle={{
-          flex: 1,
+        size="medium"
+        avatarStyle={{
+          borderRadius: 10,
         }}
+
         // eslint-disable-next-line react-native/no-inline-styles
-        avatarStyle={{borderRadius: 20}}
       />
       <View
         style={{
           marginHorizontal: 15,
-          marginTop: 5,
           flex: 2,
         }}>
         <Text
@@ -53,7 +52,7 @@ const Transaction = () => {
       <View
         style={{
           marginLeft: 15,
-          marginTop: 5,
+
           flex: 1.5,
         }}>
         <Text
@@ -61,7 +60,6 @@ const Transaction = () => {
             fontSize: 20,
             color: 'black',
             fontWeight: '500',
-            letterSpacing: 0.1,
           }}>
           Something
         </Text>
@@ -84,9 +82,9 @@ const HomeScreen = () => {
           <View style={styles.containerChild}>
             <Avatar
               source={{uri: 'https://picsum.photos/200/300'}}
-              size="large"
+              size="medium"
               // eslint-disable-next-line react-native/no-inline-styles
-              avatarStyle={{borderRadius: 20}}
+              avatarStyle={{borderRadius: 15}}
             />
             <View>
               <Text style={styles.welcometext}>Welcome back,</Text>
@@ -225,9 +223,8 @@ const HomeScreen = () => {
 
 const styles = StyleSheet.create({
   welcometext: {
-    fontSize: 18,
+    fontSize: 15,
     marginLeft: 10,
-    fontStyle: 'italic',
     fontFamily: 'Roboto',
     letterSpacing: 1,
     color: Color.gray,
@@ -246,10 +243,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
-    marginTop: 5,
+    marginTop: 2,
     color: Color.primary,
   },
   header: {
@@ -258,7 +255,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     borderWidth: 0,
-    height: 100,
+    height: 70,
     elevation: 0,
     //   ...styles.shadow,
   },

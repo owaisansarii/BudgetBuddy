@@ -1,15 +1,17 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import AddDataScreen from '../screens/AddDataScreen';
 import {Icon} from '@rneui/base';
 import {Color} from '../Theme/Color';
+import {useNavigation} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -47,7 +49,12 @@ const Tabs = () => {
             );
           } else {
             return (
-              <View style={styles.centeredView}>
+              <Pressable
+                style={styles.centeredView}
+                onPress={e => {
+                  e.preventDefault();
+                  navigation.navigate('Expenses');
+                }}>
                 <View style={styles.modalView}>
                   <Icon
                     name={iconName}
@@ -56,12 +63,13 @@ const Tabs = () => {
                     type="material-community"
                   />
                 </View>
-              </View>
+              </Pressable>
             );
           }
         },
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
+      {/* AddDataScreen will open a fullSize screen hidind the tabs */}
       <Tab.Screen name="AddData" component={AddDataScreen} />
       <Tab.Screen name="History" component={HistoryScreen} />
     </Tab.Navigator>
