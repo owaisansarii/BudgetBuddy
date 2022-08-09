@@ -3,7 +3,12 @@ import {StyleSheet} from 'react-native';
 import {Color} from '../Theme/Color';
 import LinearGradient from 'react-native-linear-gradient';
 import {Input} from '@rneui/themed';
-const BottomBar = () => {
+const BottomBar = ({
+  onDescriptionChange,
+  onAmountChange,
+  description,
+  amount,
+}) => {
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
@@ -12,6 +17,7 @@ const BottomBar = () => {
       style={styles.container}>
       <Input
         placeholder="Memo"
+        value={description}
         placeholderTextColor={'#6A6969'}
         leftIcon={{
           type: 'material-community',
@@ -21,17 +27,20 @@ const BottomBar = () => {
         style={styles.ipStyle}
         inputContainerStyle={styles.ipContainerStyle}
         inputStyle={styles.inputStyle}
+        onChangeText={onDescriptionChange}
         // eslint-disable-next-line react-native/no-inline-styles
         containerStyle={[styles.inputContainerStyle, {flex: 1}]}
       />
       <Input
         placeholder="0"
+        value={amount}
         keyboardType="decimal-pad"
         placeholderTextColor={Color.white}
         style={styles.ipStyle}
         inputContainerStyle={styles.ipContainerStyle}
         inputStyle={styles.inputStyle}
         containerStyle={styles.inputContainerStyle}
+        onChangeText={onAmountChange}
       />
     </LinearGradient>
   );

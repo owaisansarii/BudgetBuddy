@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Icon} from '@rneui/base';
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Color} from '../Theme/Color';
 import BottomBar from '../components/BottomBar.addScreen';
 import Header from '../components/Header.addScreen';
+import Realm from 'realm';
 
 const types = [
   {
@@ -59,13 +61,18 @@ const types = [
   },
 ];
 
-const Types = ({type}) => {
+const Types = ({type, onTypePress, selectedType}) => {
   return (
-    <View
+    <Pressable
       style={{
         width: '33%',
         height: 100,
         alignItems: 'center',
+        backgroundColor:
+          selectedType === type.type ? Color.white : Color.background,
+      }}
+      onPress={() => {
+        onTypePress(type.type);
       }}>
       <Icon
         name={type.icon}
@@ -85,11 +92,33 @@ const Types = ({type}) => {
         }}>
         {type.type}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
 const AppDataScreen = ({navigation}) => {
+  const [selectedType, setSelectedType] = React.useState('');
+  const [amount, setAmount] = React.useState('');
+  const [description, setDescription] = React.useState('');
+
+  const onTypePress = type => {
+    setSelectedType(type);
+  };
+  const onAmountChange = amt => {
+    setAmount(amt);
+  };
+  const onDescriptionChange = text => {
+    setDescription(text);
+  };
+  const onSubmit = () => {
+    // choose automatic date and time
+    const date = new Date();
+    const time = date.toLocaleTimeString();
+    const dateString = date.toLocaleDateString();
+    console.log(dateString, time, amount, description, selectedType);
+    alert(`${dateString} ${time} ${amount} ${description} ${selectedType}`);
+  };
+
   return (
     <View
       style={{
@@ -97,7 +126,7 @@ const AppDataScreen = ({navigation}) => {
         backgroundColor: Color.background,
         width: '100%',
       }}>
-      <Header navigation={navigation} />
+      <Header navigation={navigation} onSubmit={onSubmit} />
       <View
         style={{
           flex: 1,
@@ -107,10 +136,22 @@ const AppDataScreen = ({navigation}) => {
           flexWrap: 'wrap',
         }}>
         {types.map((type, index) => {
-          return <Types key={index} type={type} />;
+          return (
+            <Types
+              key={index}
+              type={type}
+              onTypePress={onTypePress}
+              selectedType={selectedType}
+            />
+          );
         })}
       </View>
-      <BottomBar />
+      <BottomBar
+        onDescriptionChange={onDescriptionChange}
+        onAmountChange={onAmountChange}
+        description={description}
+        amount={amount}
+      />
     </View>
   );
 };

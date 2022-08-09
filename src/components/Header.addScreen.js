@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Color} from '../Theme/Color';
 import BottomBar from '../components/BottomBar.addScreen';
 
-const Header = ({navigation}) => {
+const Header = ({navigation, onSubmit}) => {
   return (
     <View
       style={{
@@ -45,9 +45,7 @@ const Header = ({navigation}) => {
         buttonStyle={{
           backgroundColor: Color.primary,
         }}
-        onPress={() => {
-          console.log('pressed');
-        }}
+        onPress={onSubmit}
         title="Add"
       />
     </View>
