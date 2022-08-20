@@ -1,11 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Icon} from '@rneui/base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Color} from '../Theme/Color';
 import BottomBar from '../components/BottomBar.addScreen';
 import Header from '../components/Header.addScreen';
 import Realm from 'realm';
+import ItemSchema from '../Schema/ItemSchema';
+import {v5 as uuidv5} from 'uuid';
 
 const types = [
   {
@@ -100,7 +102,24 @@ const AppDataScreen = ({navigation}) => {
   const [selectedType, setSelectedType] = React.useState('');
   const [amount, setAmount] = React.useState('');
   const [description, setDescription] = React.useState('');
-
+  // const realm = new Realm({schema: [ItemSchema]});
+  const realm = React.useRef(null);
+  useEffect(() => {
+    realm.current = new Realm({schema: [ItemSchema]});
+    navigation.setOptions({
+      header: () => (
+        <Header
+          title="Add Data"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      ),
+    });
+    return () => {
+      realm.current.close();
+    };
+  }, [navigation]);
   const onTypePress = type => {
     setSelectedType(type);
   };
@@ -110,13 +129,25 @@ const AppDataScreen = ({navigation}) => {
   const onDescriptionChange = text => {
     setDescription(text);
   };
-  const onSubmit = () => {
+
+  const onSubmit = async () => {
     // choose automatic date and time
     const date = new Date();
     const time = date.toLocaleTimeString();
     const dateString = date.toLocaleDateString();
-    console.log(dateString, time, amount, description, selectedType);
-    alert(`${dateString} ${time} ${amount} ${description} ${selectedType}`);
+    const _id = uuidv5(dateString + time, uuidv5.DNS);
+    const item = {
+      _id,
+      type: selectedType,
+      amount: parseFloat(amount),
+      description,
+      date: dateString,
+    };
+    const item2 = realm.current.write(() => {
+      realm.current.create('Item', item);
+    });
+    console.log(item2);
+    navigation.goBack();
   };
 
   return (

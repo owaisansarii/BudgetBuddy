@@ -1,12 +1,11 @@
 const ItemSchema = {
   name: 'Item',
   properties: {
-    _id: 'uuid',
+    _id: 'string',
     type: 'string',
     description: 'string',
-    amount: 'int',
+    amount: 'float',
     date: 'date',
-    time: 'string',
   },
   primaryKey: '_id',
 };
