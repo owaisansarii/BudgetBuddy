@@ -25,9 +25,10 @@ const AuthProvider = ({children}) => {
     setIsLoading(false);
   };
   const getToken = async () => {
+    setIsLoading(true);
     const token = await Keychain.getGenericPassword();
-    console.log('tokenss', token);
     setUserToken(token.password);
+    setIsLoading(false);
   };
   useEffect(() => {
     getToken();

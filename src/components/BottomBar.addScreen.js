@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {Color} from '../Theme/Color';
 import LinearGradient from 'react-native-linear-gradient';
 import {Input} from '@rneui/themed';
@@ -8,41 +8,51 @@ const BottomBar = ({
   onAmountChange,
   description,
   amount,
+  onDatePress,
 }) => {
   return (
-    <LinearGradient
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      colors={[Color.secondary, Color.primary]}
-      style={styles.container}>
-      <Input
-        placeholder="Memo"
-        value={description}
-        placeholderTextColor={'#6A6969'}
-        leftIcon={{
-          type: 'material-community',
-          name: 'notebook-plus-outline',
-          style: {paddingBottom: 5},
-        }}
-        style={styles.ipStyle}
-        inputContainerStyle={styles.ipContainerStyle}
-        inputStyle={styles.inputStyle}
-        onChangeText={onDescriptionChange}
-        // eslint-disable-next-line react-native/no-inline-styles
-        containerStyle={[styles.inputContainerStyle, {flex: 1}]}
-      />
-      <Input
-        placeholder="0"
-        value={amount}
-        keyboardType="decimal-pad"
-        placeholderTextColor={Color.white}
-        style={styles.ipStyle}
-        inputContainerStyle={styles.ipContainerStyle}
-        inputStyle={styles.inputStyle}
-        containerStyle={styles.inputContainerStyle}
-        onChangeText={onAmountChange}
-      />
-    </LinearGradient>
+    <View style={{}}>
+      <Text
+        style={{
+          color: Color.text,
+        }}>
+        Press on calendar icon to select date/time
+      </Text>
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={[Color.secondary, Color.primary]}
+        style={styles.container}>
+        <Input
+          placeholder="Memo"
+          value={description}
+          placeholderTextColor={'#6A6969'}
+          leftIcon={{
+            type: 'material-community',
+            name: 'calendar',
+            style: {paddingBottom: 5},
+            onPress: () => onDatePress(),
+          }}
+          style={styles.ipStyle}
+          inputContainerStyle={styles.ipContainerStyle}
+          inputStyle={styles.inputStyle}
+          onChangeText={onDescriptionChange}
+          // eslint-disable-next-line react-native/no-inline-styles
+          containerStyle={[styles.inputContainerStyle, {flex: 1}]}
+        />
+        <Input
+          placeholder="0"
+          value={amount}
+          keyboardType="decimal-pad"
+          placeholderTextColor={Color.white}
+          style={styles.ipStyle}
+          inputContainerStyle={styles.ipContainerStyle}
+          inputStyle={styles.inputStyle}
+          containerStyle={styles.inputContainerStyle}
+          onChangeText={onAmountChange}
+        />
+      </LinearGradient>
+    </View>
   );
 };
 
@@ -53,8 +63,10 @@ const styles = StyleSheet.create({
     height: 60,
     width: '100%',
     flexDirection: 'row',
-    position: 'absolute',
-    bottom: 0,
+    // position: 'absolute',
+
+    // position: 'absolute',
+
     alignItems: 'center',
   },
   ipStyle: {

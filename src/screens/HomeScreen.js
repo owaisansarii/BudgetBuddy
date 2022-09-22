@@ -1,6 +1,13 @@
-import {Avatar, Card, Icon} from '@rneui/base';
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {Avatar, Button, Card, Icon} from '@rneui/base';
+import React, {useCallback, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Animated,
+  Pressable,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Color} from '../Theme/Color';
 import Realm from 'realm';
@@ -168,6 +175,32 @@ const Transaction = ({item}) => {
 const HomeScreen = () => {
   const realm = React.useRef(null);
   const [itemArr, setItemArr] = React.useState([]);
+  const [collapsed, setCollapsed] = React.useState(true);
+  const animationHeight = React.useRef(new Animated.Value(50)).current;
+
+  const collapseleView = useCallback(() => {
+    Animated.timing(animationHeight, {
+      toValue: 150,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  }, [animationHeight]);
+
+  const expandView = useCallback(() => {
+    Animated.timing(animationHeight, {
+      toValue: 50,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  }, [animationHeight]);
+
+  useEffect(() => {
+    if (collapsed) {
+      expandView();
+    } else {
+      collapseleView();
+    }
+  }, [collapsed, expandView, collapseleView]);
   React.useEffect(() => {
     realm.current = new Realm({schema: [ItemSchema]});
     if (realm.current) {
@@ -192,20 +225,22 @@ const HomeScreen = () => {
 
   return (
     <>
-      <View style={styles.containerChild}>
-        <Avatar
-          source={{uri: 'https://picsum.photos/200/300'}}
-          size={'50'}
-          // eslint-disable-next-line react-native/no-inline-styles
-          avatarStyle={{borderRadius: 15}}
-          onPress={() => navigation.openDrawer()}
-        />
-        <View>
-          {/* <Text style={styles.welcometext}>Welcome back,</Text> */}
-          <Text style={styles.name}>John Doe</Text>
+      <Animated.View style={{height: animationHeight}}>
+        <View style={styles.containerChild}>
+          <Avatar
+            source={{uri: 'https://picsum.photos/200/300'}}
+            size={'50'}
+            // eslint-disable-next-line react-native/no-inline-styles
+            avatarStyle={{borderRadius: 15}}
+            onPress={() => setCollapsed(!collapsed)}
+          />
+          <View>
+            {/* <Text style={styles.welcometext}>Welcome back,</Text> */}
+            <Text style={styles.name}>John Doe</Text>
+          </View>
         </View>
-      </View>
-
+        <Button title="Logout" buttonStyle={styles.logoutButton} />
+      </Animated.View>
       <ScrollView>
         <View style={styles.container}>
           <LinearGradient
@@ -357,6 +392,7 @@ const styles = StyleSheet.create({
   containerChild: {
     flexDirection: 'row',
     padding: 10,
+    height: 50,
     backgroundColor: 'white',
     // justifyContent: 'space-between',
     alignItems: 'center',
@@ -384,6 +420,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     // justifyContent: 'center',
     alignItems: 'center',
+    elevation: 20,
+    shadowColor: Color.primary,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 1,
+    shadowRadius: 10,
   },
   totalBalance: {
     color: '#fff',
@@ -398,6 +439,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  logoutButton: {
+    backgroundColor: Color.primary,
+    borderRadius: 10,
+    marginTop: 20,
+    width: '80%',
+    alignSelf: 'center',
   },
 });
 

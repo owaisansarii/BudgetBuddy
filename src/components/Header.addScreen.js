@@ -3,8 +3,9 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Color} from '../Theme/Color';
 import BottomBar from '../components/BottomBar.addScreen';
+import moment from 'moment';
 
-const Header = ({navigation, onSubmit}) => {
+const Header = ({navigation, onSubmit, title, date}) => {
   return (
     <View
       style={{
@@ -26,22 +27,52 @@ const Header = ({navigation, onSubmit}) => {
           navigation.goBack();
         }}
       />
-      <Text
+      <View
         style={{
           flex: 1,
-          color: Color.black,
-          fontSize: 21,
-          // fontWeight: 'bold',
-          paddingLeft: 20,
+          justifyContent: 'flex-start',
+          flexDirection: 'row',
+          alignItems: 'center',
         }}>
-        Expenses
-      </Text>
+        <Text
+          style={{
+            flex: 1,
+            color: Color.black,
+            fontSize: 21,
+            // fontWeight: 'bold',
+            paddingLeft: 20,
+          }}>
+          {title}
+        </Text>
+        <View
+          style={{
+            right: 10,
+          }}>
+          <Text
+            style={{
+              color: Color.text,
+              fontSize: 15,
+              fontWeight: 'bold',
+            }}>
+            {moment(date).format('MMM DD,')}
+          </Text>
+          <Text
+            style={{
+              color: Color.text,
+              fontSize: 15,
+            }}>
+            {moment(date).format('hh:mm a')}
+          </Text>
+        </View>
+      </View>
       <Button
         containerStyle={{
           width: 100,
           marginRight: 20,
           borderRadius: 10,
+          justifyContent: 'flex-end',
         }}
+        style={{}}
         buttonStyle={{
           backgroundColor: Color.primary,
         }}

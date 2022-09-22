@@ -8,6 +8,7 @@ export const Color = {
   black: '#000',
   white: '#fff',
   gray: '#6A6969',
+  text: '#50006B',
   // lightest purple
   background: '#F0EFF0',
 };
